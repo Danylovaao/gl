@@ -1,0 +1,12 @@
+repo-list .row,
+repo-list .row.pagination div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+repo-list .search {
+    margin: 20px 0;
+}
+

@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row search">
+        <div class="col-md-6">
+            <div class="">
+                <form name="vm.searchForm"
+                      ng-submit="vm.getRepositories(vm.searchQuery)"
+                      class="input-group">
+                    <input type="text"
+                           ng-required="true"
+                           name="searchField"
+                           ng-model="vm.searchQuery"
+                           class="form-control"
+                           placeholder="Enter repository name">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default"
+                                type="submit"
+                                ng-disabled="vm.searchForm.$invalid">
+                            Search
+                        </button>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row list" ng-show="vm.repositories.length">
+        <div class="col-md-10 col-xs-12">
+            <ul class="list-group">
+                <li ng-repeat="item in vm.repositories"
+                    class="list-group-item clearfix">
+                    <div class="col-sm-1 thumbnail hidden-xs">
+                        <img src="{{item.owner.avatar_url}}" alt="">
+                    </div>
+                    <div class="col-sm-5">
+                        <p><strong>Name:</strong> {{item.name}}</p>
+                        <p><strong>Author:</strong> {{item.owner.login}}</p>
+                        <p><strong>Stars:</strong> {{item.stargazers_count}}</p>
+                    </div>
+                    <div class="col-sm-5 hidden-xs">
+                        <p><strong>Issues:</strong> {{item.open_issues_count}}</p>
+                        <p><strong>Url:</strong> <a href="{{item.url}}">{{item.url}}</a></p>
+                        <p><strong>Url:</strong>{{item.private ? 'Privat' : 'Public'}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row msg" ng-show="!vm.repositories.length && vm.isResponseFinalized">
+        <div class="col-md-10 col-xs-12 centered">
+            <h3>There are no repositories by this query =(</h3>
+        </div>
+    </div>
+
+    <div class="row pagination" ng-if="vm.pages">
+        <div class="col-md-10 col-xs-12">
+            <select class="col-xs-1"
+                    ng-options="page as page for page in vm.pages.pagesArray"
+                    ng-model="vm.pages.pagesNavigation.currentPage"
+                    ng-change="vm.getRepositories(vm.searchQuery, vm.pages.pagesNavigation.currentPage)"
+            ></select>
+        </div>
+    </div>
+</div>
